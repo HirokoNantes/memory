@@ -7,7 +7,7 @@
     #clock{
         font-size: 30px;
         margin: 30px;
-user-select: none;
+        user-select: none;
     }
     #field{
         margin: 30px;
@@ -108,63 +108,6 @@ user-select: none;
         time++;
         clock.innerText = `Time : ${time}`;
     },1000);
-
-      
-
-    /*const can = document.getElementById("canvas");
-    const ctx = can.getContext("2d");
-    const W = can.width;
-    const H = can.height;
-
-    const x = 50;
-    const yInit = 250;
-    let y = yInit;
-    const size = 80;
-    const speedInit = -16;
-    let speed = speedInit;
-    const gravity = 0.7;
-    let isJumping = false;
-
-    const img = new Image();
-    img.src = "img.jpg";
-    const lineY = y + size;
-    ctx.beginPath();
-    ctx.moveTo(0, lineY);
-    ctx.lineTo(W, lineY);
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = '#7f2';
-
-    img.onload = mainLoop;
-
-    document.onkeydown = (e) =>{
-        if(e.code === "Space" && !isJumping){
-            isJumping = true;
-        }
-    }
-
-    function jump(){
-        if(isJumping){
-        y += speed;
-        speed += gravity;
-        }
-        if(y>yInit) {
-            y = yInit;
-            speed = speedInit;
-            isJumping = false;
-        }
-    }
-
-    function draw(){
-        ctx.clearRect(0,0,W,H);
-        ctx.drawImage(img,x,y,size,size);
-        ctx.stroke();
-    }
-
-    function mainLoop(){
-        jump();
-        draw();
-        requestAnimationFrame(mainLoop);
-    }*/
 
 </script>
 </body>
