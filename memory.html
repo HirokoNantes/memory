@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+<head>
+<meta charset = "utf-8">
+<title>memory</title>
+<style>
+    #clock{
+        font-size: 30px;
+        margin: 30px;
+user-select: none;
+    }
+    #field{
+        margin: 30px;
+        width: 570px;
+    }
+    .card{
+        width: 70px;
+        height: 100px;
+        line-height: 100px;
+        border: 2px solid #aaa;
+        border-radius: 5px;
+        font-size: 30px;
+        margin: 10px;
+        float: left;
+        text-align: center;
+        user-select: none;        
+    }
+</style>
+</head>
+<body>
+    <div id="clock">Time : 0</div>
+    <div id="field"></div>
+<script>
+
+   // カード配列
+   let cards = [
+    "1","2","3","4","5","6","7","8","9",
+    "1","2","3","4","5","6","7","8","9"
+   ];
+
+   //ランダム関数
+   function random(min,max){
+    return Math.floor(Math.random()*(max-min+1)+min);
+   }
+
+   //カードシャッフル
+   for(let i=cards.length-1; i>0; i--){
+    let r = random(0,i);
+    let tmp = cards[i]
+    cards[i] = cards[r];
+    cards[r] = tmp;
+   }
+
+   //フィールド取得
+   const field = document.getElementById("field");
+
+   //カード生成とフィールドに追加
+    for(let i = 0; i<cards.length; i++){
+        let card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = "🐧";
+        card.index = i;
+        card.onclick = click;
+        field.appendChild(card);
+    }
+
+    //クリック時の挙動
+    let first  = null;
+    let second = null;
+    let timer  = null;
+    let answer = 0;
+
+    function click(e){
+        if(timer){
+            clearTimeout(timer);
+            judge();
+        }
+        let clickedCard = e.target;
+        clickedCard.innerHTML = cards[clickedCard.index];
+
+        if(!first) first = clickedCard;
+        else if(first.index==clickedCard.index) return;
+        else{
+            second = clickedCard;
+            timer = setTimeout(judge,1100);
+        }        
+    }
+
+    function judge(){
+        if(first.innerHTML===second.innerHTML){
+            first.style.visibility  = "hidden";
+            second.style.visibility = "hidden";
+            answer++;
+            if(answer===cards.length/2) clearInterval(clockTimer);
+        } 
+        else{
+            first.innerHTML  = "🐥";
+            second.innerHTML = "🐥";               
+        }
+        first  = null;
+        second = null;
+        timer  = null;
+    }
+
+    const clock = document.getElementById("clock");
+    let time = 0;
+    let clockTimer = setInterval(()=>{;
+        time++;
+        clock.innerText = `Time : ${time}`;
+    },1000);
+
+      
+
+    /*const can = document.getElementById("canvas");
+    const ctx = can.getContext("2d");
+    const W = can.width;
+    const H = can.height;
+
+    const x = 50;
+    const yInit = 250;
+    let y = yInit;
+    const size = 80;
+    const speedInit = -16;
+    let speed = speedInit;
+    const gravity = 0.7;
+    let isJumping = false;
+
+    const img = new Image();
+    img.src = "img.jpg";
+    const lineY = y + size;
+    ctx.beginPath();
+    ctx.moveTo(0, lineY);
+    ctx.lineTo(W, lineY);
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = '#7f2';
+
+    img.onload = mainLoop;
+
+    document.onkeydown = (e) =>{
+        if(e.code === "Space" && !isJumping){
+            isJumping = true;
+        }
+    }
+
+    function jump(){
+        if(isJumping){
+        y += speed;
+        speed += gravity;
+        }
+        if(y>yInit) {
+            y = yInit;
+            speed = speedInit;
+            isJumping = false;
+        }
+    }
+
+    function draw(){
+        ctx.clearRect(0,0,W,H);
+        ctx.drawImage(img,x,y,size,size);
+        ctx.stroke();
+    }
+
+    function mainLoop(){
+        jump();
+        draw();
+        requestAnimationFrame(mainLoop);
+    }*/
+
+</script>
+</body>
+</html>
